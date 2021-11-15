@@ -1,1 +1,1 @@
-var page = chrome.extension.getBackgroundPage();
+var ext = chrome.extension.getBackgroundPage();
