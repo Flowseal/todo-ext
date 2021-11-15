@@ -1,85 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-
+ 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="css/style.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/normalize.css">
+    <link href="css/normalize.css" rel="stylesheet">
+
     <title>ToDo</title>
 </head>
-
 <body>
     <div class="header">
-        <input type="text" id="search" class="form-control" placeholder="Search" aria-label="Search"
-            aria-describedby="basic-addon1">
+        <input type="text" id="search" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1">
     </div>
 
-    <div class="container_custom">
+    <div style="display: flex;">
         <div class="left_bar">
-            <div class="type_btn_selected">
+            <div class="type_btn_selected cursor noselect">
                 <img src='svgs/Today.svg' style="padding-bottom: 3px;" />
                 <span style="padding-left: 4px;">Today</span>
             </div>
 
-            <div class="type_btn">
+            <div class="type_btn cursor noselect">
                 <img src='svgs/Coming.svg' style="padding-bottom: 3px;" />
                 <span style="padding-left: 4px;">Coming</span>
             </div>
 
-            <div class="type_btn">
+            <div class="type_btn cursor noselect">
                 <img src='svgs/ArrowOpened.svg' />
                 <span style="padding-left: 4px; font-weight: 350;">Projects</span>
             </div>
 
             <div class="projects">
-                <div class="project">
+                <div class="project cursor noselect" id="alert-icon">
                     <img src='svgs/AlertCircle.svg' />
-                    <span style="padding-left: 6px;">School</span>
+                    <span>School</span>
                 </div>
 
-                <div class="project">
+                <div class="project cursor noselect" id="alert-icon">
                     <img src='svgs/AlertCircle.svg' />
-                    <span style="padding-left: 6px;">Work</span>
+                    <span>Work</span>
                 </div>
 
-                <div class="project">
+                <div class="project cursor noselect" id="alert-icon">
                     <img src='svgs/AlertCircle.svg' />
-                    <span style="padding-left: 6px;">Other</span>
+                    <span>Other</span>
                 </div>
 
-                <div class="project">
+                <div class="project cursor noselect" id="new-project">
                     <img src='svgs/New.svg' />
-                    <span style="padding-left: 6px; color: rgba(32, 32, 32, 0.5);">
+                    <span>
                         New Project
                     </span>
                 </div>
             </div>
 
             <div class="space"></div>
-
-            <div class="type_btn">
-                <img src='svgs/List.svg' style="padding-bottom: 3px;" />
+            
+            <div class="type_btn cursor noselect">
+                <img src='svgs/List.svg' style="padding-bottom: 3px;"/>
                 <span style="padding-left: 4px;">Unsorted</span>
             </div>
 
-            <div class="type_btn">
-                <img src='svgs/Archived.svg' style="padding-bottom: 3px;" />
+            <div class="type_btn cursor noselect">
+                <img src='svgs/Archived.svg' style="padding-bottom: 3px;"/>
                 <span style="padding-left: 4px;">Archived</span>
             </div>
         </div>
 
         <div class="content">
-            <div class="content_top">
+            <div class="content_top noselect">
                 <div style="display:flex;">
                     <span id="category_span">Today</span>
                     <span id="date_span" style="padding: 10px 5px;">Tue 12 oct</span>
                 </div>
-                <div style="display:flex; padding-top: 3px;">
+                <div class="cursor" style="display:flex; padding-top: 3px;">
                     <span id="sort_span" style="padding-right: 6px;">Sort by</span>
-                    <img src='svgs/Sort.svg' style="width: 12px; height: 19px; padding-top: 5px;" />
+                    <img src='svgs/Sort.svg' style="width: 12px; height: 19px; padding-top: 5px;"/>
                 </div>
             </div>
 
@@ -90,11 +88,11 @@
                         <span>do the homework</span>
                     </div>
                     <div id="top-right" style="display: flex; gap: 5px; margin-right: -15px;">
-                        <img src='svgs/Vajno.svg' style="width: 12px; height:12px;" />
-                        <img src='svgs/Srochno.svg' style="width: 12px; height: 12px;" />
+                        <img src='svgs/Vajno.svg' class="cursor" id="vajno" style="width: 12px; height:12px;"/>
+                        <img src='svgs/Srochno.svg' class="cursor" id="srochno" style="width: 12px; height: 12px;"/>
                     </div>
                     <div id="bottom-right">
-                        <img src='svgs/Ok.svg' style="width: 16px; height: 16px;" />
+                        <img src='svgs/Ok.svg' id="iok" class="cursor" style="width: 16px; height: 16px;"/>
                     </div>
                 </div>
 
@@ -104,10 +102,10 @@
                         <span>learn a poem</span>
                     </div>
                     <div id="top-right" style="display: flex; gap: 5px; margin-right: -15px;">
-                        <img src='svgs/Vajno.svg' style="width: 12px; height:12px;" />
+                        <img src='svgs/Vajno.svg' class="cursor" id="vajno" style="width: 12px; height:12px;"/>
                     </div>
                     <div id="bottom-right">
-                        <img src='svgs/Ok.svg' style="width: 16px; height: 16px;" />
+                        <img src='svgs/Ok.svg' id="iok" class="cursor" style="width: 16px; height: 16px;"/>
                     </div>
                 </div>
 
@@ -117,10 +115,101 @@
                         <span>prepare for exam</span>
                     </div>
                     <div id="top-right" style="display: flex; gap: 5px; margin-right: -15px;">
-                        <img src='svgs/Srochno.svg' style="width: 12px; height: 12px;" />
+                        <img src='svgs/Srochno.svg' class="cursor" id="srochno" style="width: 12px; height: 12px;"/>
                     </div>
                     <div id="bottom-right">
-                        <img src='svgs/Ok.svg' style="width: 16px; height: 16px;" />
+                        <img src='svgs/Ok.svg' id="iok" class="cursor" style="width: 16px; height: 16px;"/>
+                    </div>
+                </div>
+
+                <div class="todo">
+                    <div id="top-left" style="display: flex; flex-direction: column;">
+                        <span id="date_to">12 oct</span>
+                        <span>prepare for exam</span>
+                    </div>
+                    <div id="top-right" style="display: flex; gap: 5px; margin-right: -15px;">
+                        <img src='svgs/Srochno.svg' class="cursor" id="srochno" style="width: 12px; height: 12px;"/>
+                    </div>
+                    <div id="bottom-right">
+                        <img src='svgs/Ok.svg' id="iok" class="cursor" style="width: 16px; height: 16px;"/>
+                    </div>
+                </div>
+
+                <div class="todo">
+                    <div id="top-left" style="display: flex; flex-direction: column;">
+                        <span id="date_to">12 oct</span>
+                        <span>prepare for exam</span>
+                    </div>
+                    <div id="top-right" style="display: flex; gap: 5px; margin-right: -15px;">
+                        <img src='svgs/Srochno.svg' class="cursor" id="srochno" style="width: 12px; height: 12px;"/>
+                    </div>
+                    <div id="bottom-right">
+                        <img src='svgs/Ok.svg' id="iok" class="cursor" style="width: 16px; height: 16px;"/>
+                    </div>
+                </div>
+
+                <div class="todo">
+                    <div id="top-left" style="display: flex; flex-direction: column;">
+                        <span id="date_to">12 oct</span>
+                        <span>prepare for exam</span>
+                    </div>
+                    <div id="top-right" style="display: flex; gap: 5px; margin-right: -15px;">
+                        <img src='svgs/Srochno.svg' class="cursor" id="srochno" style="width: 12px; height: 12px;"/>
+                    </div>
+                    <div id="bottom-right">
+                        <img src='svgs/Ok.svg' id="iok" class="cursor" style="width: 16px; height: 16px;"/>
+                    </div>
+                </div>
+
+                <div class="todo">
+                    <div id="top-left" style="display: flex; flex-direction: column;">
+                        <span id="date_to">12 oct</span>
+                        <span>prepare for exam</span>
+                    </div>
+                    <div id="top-right" style="display: flex; gap: 5px; margin-right: -15px;">
+                        <img src='svgs/Srochno.svg' class="cursor" id="srochno" style="width: 12px; height: 12px;"/>
+                    </div>
+                    <div id="bottom-right">
+                        <img src='svgs/Ok.svg' id="iok" class="cursor" style="width: 16px; height: 16px;"/>
+                    </div>
+                </div>
+
+                <div class="todo">
+                    <div id="top-left" style="display: flex; flex-direction: column;">
+                        <span id="date_to">12 oct</span>
+                        <span>prepare for exam</span>
+                    </div>
+                    <div id="top-right" style="display: flex; gap: 5px; margin-right: -15px;">
+                        <img src='svgs/Srochno.svg' class="cursor" id="srochno" style="width: 12px; height: 12px;"/>
+                    </div>
+                    <div id="bottom-right">
+                        <img src='svgs/Ok.svg' id="iok" class="cursor" style="width: 16px; height: 16px;"/>
+                    </div>
+                </div>
+
+                <div class="todo">
+                    <div id="top-left" style="display: flex; flex-direction: column;">
+                        <span id="date_to">12 oct</span>
+                        <span>prepare for exam</span>
+                    </div>
+                    <div id="top-right" style="display: flex; gap: 5px; margin-right: -15px;">
+                        <img src='svgs/Srochno.svg' class="cursor" id="srochno" style="width: 12px; height: 12px;"/>
+                    </div>
+                    <div id="bottom-right">
+                        <img src='svgs/Ok.svg' id="iok" class="cursor" style="width: 16px; height: 16px;"/>
+                    </div>
+                </div>
+
+                <div class="todo">
+                    <div id="top-left" style="display: flex; flex-direction: column;">
+                        <span id="date_to">12 oct</span>
+                        <span>prepare for exam</span>
+                    </div>
+                    <div id="top-right" style="display: flex; gap: 5px; margin-right: -15px;">
+                        <img src='svgs/Srochno.svg' class="cursor" id="srochno" style="width: 12px; height: 12px;"/>
+                    </div>
+                    <div id="bottom-right">
+                        <img src='svgs/Ok.svg' id="iok" class="cursor" style="width: 16px; height: 16px;"/>
                     </div>
                 </div>
 
@@ -130,14 +219,28 @@
                         <span>sleep</span>
                     </div>
                     <div id="bottom-right">
-                        <img src='svgs/Ok.svg' style="width: 16px; height: 16px;" />
+                        <img src='svgs/Ok.svg' id="iok" class="cursor" style="width: 16px; height: 16px;"/>
                     </div>
                 </div>
+
+                <div class="todo-new">
+                    <img src='svgs/Coming.svg' class="cursor"/>
+                    <input type="text" id="input-new" class="form-control" placeholder="don't forget to" aria-label="don't forget to" aria-describedby="basic-addon1">
+                    
+                    <div style="padding-left: 4px; padding-right: 4px; display: flex; gap: 4px;">
+                        <img src='svgs/Vajno.svg' class="cursor" id="vajno" class="cursor" style="width: 12px; height:12px;"/>
+                        <img src='svgs/Srochno.svg' class="cursor" id="srochno" class="cursor" style="width: 12px; height: 12px;"/>
+                    </div>
+
+                    <img src='svgs/Ok.svg' id="iok" class="cursor" style="width: 16px; height: 16px;"/>
+                </div>
+
             </div>
         </div>
     </div>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="popup.js"></script>
-</body>
 
+</body>
 </html>

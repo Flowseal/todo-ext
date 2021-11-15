@@ -1,65 +1,3 @@
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-ul[class],
-ol[class] {
-  padding: 0;
-}
-
-body,
-h1,
-h2,
-h3,
-h4,
-p,
-ul[class],
-ol[class],
-li,
-figure,
-figcaption,
-blockquote,
-dl,
-dd {
-  margin: 0;
-}
-
-ul[class],
-ol[class] {
-  list-style: none;
-}
-
-a:not([class]) {
-  text-decoration-skip-ink: auto;
-}
-
-img {
-  max-width: 100%;
-  display: block;
-}
-
-article > * + * {
-  margin-top: 1em;
-}
-
-input,
-button,
-textarea,
-select {
-  font: inherit;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
 html {
   background: white;
 }
@@ -100,6 +38,10 @@ body {
   font-style: normal;
   font-weight: 600;
   font-size: 12px;
+
+  -webkit-transition: background-color 0.2s ease-out;
+  -ms-transition: background-color 0.2s ease-out;
+  transition: background-color 0.2s ease-out;
 }
 
 #search:focus {
@@ -108,27 +50,77 @@ body {
   border-color: inherit;
   -webkit-box-shadow: none;
   box-shadow: none;
-  -webkit-transition: background-color 0.2s ease-out;
-  -ms-transition: background-color 0.2s ease-out;
-  transition: background-color 0.2s ease-out;
 }
 
 #search::placeholder {
   color: rgba(255, 255, 255, 0.65);
 }
 
-.container_custom {
-  display: flex;
-}
-
 .left_bar {
   background-color: rgb(250, 250, 250);
   border-radius: 0px 0px 0px 4px;
   width: 173px;
-  height: 377px;
+  max-height: 100%;
 
   display: flex;
   flex-direction: column;
+}
+
+.projects {
+  width: 159px;
+  display: flex;
+  flex-direction: column;
+  padding-left: 27px;
+}
+
+.project {
+  display: flex;
+  margin-top: 10px;
+  height: 18px;
+  font-family: 'Segoe UI';
+  font-style: normal;
+  font-weight: 300;
+  font-size: 12px;
+}
+
+.project span {
+  padding-left: 6px;
+}
+
+#new-project{
+  -webkit-transition: color 0.2s ease-out;
+  -ms-transition: color 0.2s ease-out;
+  transition: color 0.2s ease-out;
+
+  color: rgba(32, 32, 32, 0.5)
+}
+
+#new-project:hover{
+  color: rgba(32, 32, 32, 0.8)
+}
+
+#new-project img {
+  -webkit-transition: filter 0.2s ease-out;
+  -ms-transition: filter 0.2s ease-out;
+  transition: filter   0.2s ease-out;
+
+  filter: invert(60%) sepia(0%) saturate(476%) hue-rotate(161deg) brightness(91%) contrast(89%);
+}
+
+#new-project:hover img {
+  filter: invert(3%) sepia(16%) saturate(28%) hue-rotate(314deg) brightness(99%) contrast(85%);
+}
+
+#alert-icon img {
+  -webkit-transition: filter 0.25s ease-out;
+  -ms-transition: filter 0.25s ease-out;
+  transition: filter   0.25s ease-out;
+
+  filter: none;
+}
+
+#alert-icon:hover img {
+  filter: invert(67%) sepia(0%) saturate(1185%) hue-rotate(154deg) brightness(85%) contrast(90%);
 }
 
 .content {
@@ -185,6 +177,10 @@ body {
   border-radius: 3px;
   border: solid rgb(235, 235, 235);
   border-width: 0.5px;
+
+  -webkit-transition: border 0.2s ease-out;
+  -ms-transition: border 0.2s ease-out;
+  transition: border 0.2s ease-out;
 }
 
 .todo span {
@@ -202,20 +198,59 @@ body {
   color: rgb(128, 128, 128);
 }
 
-#top-left {
-  flex: 50%; 
+.todo-new {
+  display: flex;
+  max-width: 100%;
+  height: 43px;
+  padding: 4px 6px;
+  background-color: rgb(244, 244, 244);
+  border-radius: 3px;
+  border: solid rgb(235, 235, 235);
+  border-width: 0.5px;
+  gap: 7px;
+  align-items: center;
+  justify-content: center;
+
+  -webkit-transition: border 0.2s ease-out;
+  -ms-transition: border 0.2s ease-out;
+  transition: border 0.2s ease-out;
 }
 
-#top-right {
-  text-align: right;
+.todo:hover, .todo-new:hover
+{
+  border: solid rgb(194, 194, 194);
+  border-width: 0.5px;
 }
 
-#bottom-left {
-  flex: 50%;
+#input-new {
+  color: rgba(96, 96, 96, 1.0);
+  background-color: rgba(232, 232, 232, 1.0);
+  border-radius: 3px;
+  border-width: 0px;
+  width: 268px;
+  height: 19px;
+  padding-left: 4px;
+
+  font-family: 'Segoe UI';
+  font-style: normal;
+  font-weight: 450;
+  font-size: 13px;
+
+  -webkit-transition: background-color 0.2s ease-out;
+  -ms-transition: background-color 0.2s ease-out;
+  transition: background-color 0.2s ease-out;
 }
 
-#bottom-right {
-  align-self: flex-end;
+#input-new:focus {
+  background-color: rgba(226, 226, 226, 1.0);
+  outline: none;
+  border-color: inherit;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+#input-new::placeholder {
+  color: rgba(128, 128, 128, 0.5);
 }
 
 .type_btn {
@@ -223,6 +258,7 @@ body {
   padding-left: 7px;
   padding-top: 2px;
   border-radius: 3px;
+  background-color: rgba(0, 0, 0, 0.00);
 
   width: 159px;
   height: 22px;
@@ -233,6 +269,10 @@ body {
   font-style: normal;
   font-weight: 300;
   font-size: 12px;
+
+  -webkit-transition: background-color 0.2s ease-out;
+  -ms-transition: background-color 0.2s ease-out;
+  transition: background-color 0.2s ease-out;
 }
 
 .type_btn_selected {
@@ -252,23 +292,73 @@ body {
   font-size: 12px;
 }
 
-.projects {
-  width: 159px;
-  display: flex;
-  flex-direction: column;
-  padding-left: 27px;
-}
-
-.project {
-  display: flex;
-  margin-top: 10px;
-  height: 18px;
-  font-family: 'Segoe UI';
-  font-style: normal;
-  font-weight: 300;
-  font-size: 12px;
+.type_btn:hover {
+  background-color: rgba(0, 0, 0, 0.03);
 }
 
 .space {
   margin-top: 10px;
+}
+
+.cursor:hover {
+  cursor: pointer;
+}
+
+.noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#vajno {
+  -webkit-transition: filter 0.25s ease-out;
+  -ms-transition: filter 0.25s ease-out;
+  transition: filter   0.25s ease-out;
+
+  filter: invert(88%) sepia(11%) saturate(1248%) hue-rotate(315deg) brightness(102%) contrast(95%);
+}
+
+#vajno:hover {
+  filter: invert(70%) sepia(80%) saturate(675%) hue-rotate(310deg) brightness(116%) contrast(103%);
+}
+
+#srochno {
+  -webkit-transition: filter 0.25s ease-out;
+  -ms-transition: filter 0.25s ease-out;
+  transition: filter   0.25s ease-out;
+
+  filter: invert(90%) sepia(17%) saturate(213%) hue-rotate(129deg) brightness(94%) contrast(91%);
+}
+
+#srochno:hover {
+  filter: invert(72%) sepia(28%) saturate(483%) hue-rotate(128deg) brightness(95%) contrast(88%);
+}
+
+#iok {
+  -webkit-transition: filter 0.25s ease-out;
+  -ms-transition: filter 0.25s ease-out;
+  transition: filter   0.25s ease-out;
+
+  filter: none;
+}
+
+#iok:hover {
+  filter: invert(53%) sepia(0%) saturate(638%) hue-rotate(167deg) brightness(95%) contrast(89%);
+}
+
+
+#top-left {
+  flex: 50%; 
+}
+
+#top-right {
+  text-align: right;
+}
+
+#bottom-right {
+  align-self: flex-end;
+  padding-left: 1px;
 }
