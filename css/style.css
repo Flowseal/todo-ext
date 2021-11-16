@@ -7,7 +7,7 @@ body {
   width: 726px;
   height: 420px;
   background: white;
-  border: solid rgb(219, 76, 63);
+  
   border-width: 1px;
 }
 
@@ -16,7 +16,7 @@ body {
   height: 41px;
   background: rgb(219, 76, 63);
   padding-left: 11px;
-  padding-top: 7px;
+  padding-top: 12px;
 }
 
 #search {
@@ -32,7 +32,7 @@ body {
   background-repeat: no-repeat;
   background-size: 15px 15px;
   padding-left: 23px;
-  padding-top: 3px;
+  padding-top: 4px;
 
   font-family: 'Segoe UI';
   font-style: normal;
@@ -57,13 +57,13 @@ body {
 }
 
 .left_bar {
-  background-color: rgb(250, 250, 250);
-  border-radius: 0px 0px 0px 4px;
+  background-color: #FAFAFA;
   width: 173px;
-  max-height: 100%;
-
   display: flex;
   flex-direction: column;
+}
+.main{
+  border: 1px solid #DB4C3F;
 }
 
 .projects {
@@ -159,15 +159,20 @@ body {
 }
 
 .todos {
-  max-height: 100%;
-  max-width: 100%;
-  padding: 7px 93px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
 }
-
+#todos{
+  overflow-y: auto;
+  padding: 7px 93px;
+  height: 265px;
+}
+#todos::-webkit-scrollbar {
+  width: 7px;
+  background-color: #f9f9fd;
+}
 .todo {
+  margin-bottom: 5px;
   display: flex;
   flex-wrap: wrap;
   max-width: 100%;
@@ -201,22 +206,16 @@ body {
 .todo-new {
   display: flex;
   max-width: 100%;
-  height: 43px;
-  padding: 4px 6px;
-  background-color: rgb(244, 244, 244);
-  border-radius: 3px;
-  border: solid rgb(235, 235, 235);
-  border-width: 0.5px;
   gap: 7px;
   align-items: center;
   justify-content: center;
-
+  height: 60px;
   -webkit-transition: border 0.2s ease-out;
   -ms-transition: border 0.2s ease-out;
   transition: border 0.2s ease-out;
 }
 
-.todo:hover, .todo-new:hover
+.todo:hover
 {
   border: solid rgb(194, 194, 194);
   border-width: 0.5px;
