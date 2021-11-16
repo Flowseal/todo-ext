@@ -1,9 +1,20 @@
 var ext = chrome.extension.getBackgroundPage();
 var todos = {};
 var newTodoInput = $('#newTodoInput');
-var newTodoBtn = $('#newTodoBtn');
 newTodoInput.focus();
-
+var newTodoBtn = $('#newTodoBtn');
+var newTodoImportant = document.querySelector('#newTodoImportant');
+var newTodoUrgently = document.querySelector('#newTodoUrgently');
+var importantStatus = false, urgentlyStatus = false;
+newTodoImportant.addEventListener('click', ()=>{
+    console.log(importantStatus);
+    if (importantStatus){
+        newTodoImportant.style.filter = 'invert(88%) sepia(11%) saturate(1248%) hue-rotate(315deg) brightness(102%) contrast(95%);';
+    } else {
+        newTodoImportant.style.filter =  'invert(70%) sepia(80%) saturate(675%) hue-rotate(310deg) brightness(116%) contrast(103%);';
+    }
+    importantStatus = !importantStatus;
+});
 newTodoBtn.on('click', createTodo);
 newTodoInput.on('keydown', (e) => {
     if (e.which == 13) {

@@ -312,7 +312,9 @@ body {
   user-select: none;
 }
 
-#vajno {
+.important {
+  width: 12px;
+  height:12px;
   -webkit-transition: filter 0.25s ease-out;
   -ms-transition: filter 0.25s ease-out;
   transition: filter   0.25s ease-out;
@@ -320,11 +322,11 @@ body {
   filter: invert(88%) sepia(11%) saturate(1248%) hue-rotate(315deg) brightness(102%) contrast(95%);
 }
 
-#vajno:hover {
+.important:hover {
   filter: invert(70%) sepia(80%) saturate(675%) hue-rotate(310deg) brightness(116%) contrast(103%);
 }
 
-#srochno {
+.urgently {
   -webkit-transition: filter 0.25s ease-out;
   -ms-transition: filter 0.25s ease-out;
   transition: filter   0.25s ease-out;
@@ -332,7 +334,7 @@ body {
   filter: invert(90%) sepia(17%) saturate(213%) hue-rotate(129deg) brightness(94%) contrast(91%);
 }
 
-#srochno:hover {
+.urgently:hover {
   filter: invert(72%) sepia(28%) saturate(483%) hue-rotate(128deg) brightness(95%) contrast(88%);
 }
 
