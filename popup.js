@@ -26,9 +26,12 @@ function clickPress(event) {
         createTodo();
     }
 }
+function uniqId() {
+    return Math.round(new Date().getTime() + (Math.random() * 100));
+  }
 function createTodo() {
     if (!!!newTodoInput.val()) return;
-    var todo = new Todo(Object.keys(todos).length, newTodoInput.val());
+    var todo = new Todo(uniqId(), newTodoInput.val());
     todo.draw();
     saveTodo(todo);
     newTodoInput.val('');
