@@ -1,19 +1,23 @@
 class Todo{
-    constructor(text){
+    constructor(id, text, time = new Date() / 1){
+        this.id = id;
         this.text = text;
-        this.time = new Date();
+        this.time = time;
         this.important = false;
         this.urgently = false;
-        this.el = $(``)
     }
     draw(){
         var html = document.getElementById('todoTemplate').innerHTML;
         var template = Handlebars.compile(html);
-        console.log()
-        var data = template({ text:this.text, time:date.format(this.time, 'MM dd hh:mm') });
+
+        var data = template({ id: this.id, text:this.text, time:date.format(new Date(this.time), 'MM dd hh:mm') });
         document.getElementById(`todos`).insertAdjacentHTML("beforeend", data);
+        $(`#completeBtn_${this.id}`).on('click', ()=>{
+            deleteTodo(this);
+            this.delete();
+        });
     }
     delete(){
-        
+        $(`#todo_${this.id}`).remove();
     }
 }

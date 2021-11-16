@@ -336,15 +336,14 @@ body {
   filter: invert(72%) sepia(28%) saturate(483%) hue-rotate(128deg) brightness(95%) contrast(88%);
 }
 
-#iok {
+.completeBtn {
   -webkit-transition: filter 0.25s ease-out;
   -ms-transition: filter 0.25s ease-out;
   transition: filter   0.25s ease-out;
 
   filter: none;
 }
-
-#iok:hover {
+.completeBtn:hover {
   filter: invert(53%) sepia(0%) saturate(638%) hue-rotate(167deg) brightness(95%) contrast(89%);
 }
 

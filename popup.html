@@ -98,7 +98,7 @@
         </div>
     </div>
     <script id="todoTemplate" type="text/x-handlebars-template">
-        <div class="todo">
+        <div class="todo" id="todo_{{id}}">
             <div id="top-left" style="display: flex; flex-direction: column;">
                 <span id="date_to">{{time}}</span>
                 <span>{{text}}</span>
@@ -108,7 +108,7 @@
                 <img src='svgs/Srochno.svg' class="cursor" id="srochno" style="width: 12px; height: 12px;"/>
             </div>
             <div id="bottom-right">
-                <img src='svgs/Ok.svg' id="iok" class="cursor" style="width: 16px; height: 16px;"/>
+                <img src='svgs/Ok.svg' id="completeBtn_{{id}}" class="cursor" style="width: 16px; height: 16px;"/>
             </div>
         </div>
     </script>
