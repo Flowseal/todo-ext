@@ -90,7 +90,7 @@
                     
                     <div style="padding-left: 4px; padding-right: 4px; display: flex; gap: 4px;">
                         <img src='svgs/Vajno.svg' id="newTodoImportant" class="important cursor noselect" style="width: 12px; height:12px;"/>
-                        <img src='svgs/Srochno.svg' id="newTodoUrgently" class="urgently cursor noselect" style="width: 12px; height: 12px;"/>
+                        <img src='svgs/Srochno.svg' id="newTodoUrgently" class="urgently cursor noselect" style="width: 12px; height:12px;"/>
                     </div>
 
                     <img src='svgs/Ok.svg' class="cursor noselect" style="width: 16px; height: 16px;" id="newTodoBtn"/>
@@ -101,7 +101,7 @@
         <div class="todo" id="todo_{{id}}">
             <div id="top-left" style="display: flex; flex-direction: column;">
                 <span id="date_to">{{time}}</span>
-                <span>{{text}}</span>
+                <input type="text" class="todo-text" value="{{text}}" aria-label="{{text}}" aria-describedby="basic-addon1">
             </div>
             <div id="top-right" style="display: flex; gap: 5px; margin-right: -15px;">
                 <img src='svgs/Vajno.svg' class="important cursor noselect" style="width: 12px; height:12px;" />

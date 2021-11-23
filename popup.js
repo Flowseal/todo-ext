@@ -2,19 +2,32 @@ var ext = chrome.extension.getBackgroundPage();
 var todos = {};
 var newTodoInput = $('#newTodoInput');
 newTodoInput.focus();
+
 var newTodoBtn = $('#newTodoBtn');
 var newTodoImportant = document.querySelector('#newTodoImportant');
 var newTodoUrgently = document.querySelector('#newTodoUrgently');
 var importantStatus = false, urgentlyStatus = false;
+
 newTodoImportant.addEventListener('click', ()=>{
-    console.log(importantStatus);
-    if (importantStatus){
-        newTodoImportant.style.filter = 'invert(88%) sepia(11%) saturate(1248%) hue-rotate(315deg) brightness(102%) contrast(95%);';
-    } else {
-        newTodoImportant.style.filter =  'invert(70%) sepia(80%) saturate(675%) hue-rotate(310deg) brightness(116%) contrast(103%);';
-    }
     importantStatus = !importantStatus;
+
+    if (importantStatus){
+        newTodoImportant.classList.add('important-active')
+    } else {
+        newTodoImportant.classList.remove('important-active')
+    } 
 });
+
+newTodoUrgently.addEventListener('click', ()=>{
+    urgentlyStatus = !urgentlyStatus;
+    
+    if (urgentlyStatus){
+        newTodoUrgently.classList.add('urgently-active')
+    } else {
+        newTodoUrgently.classList.remove('urgently-active')
+    } 
+});
+
 newTodoBtn.on('click', createTodo);
 newTodoInput.on('keydown', (e) => {
     if (e.which == 13) {
@@ -26,16 +39,29 @@ function clickPress(event) {
         createTodo();
     }
 }
+
 function uniqId() {
     return Math.round(new Date().getTime() + (Math.random() * 100));
   }
 function createTodo() {
     if (!!!newTodoInput.val()) return;
-    var todo = new Todo(uniqId(), newTodoInput.val());
+
+    if (importantStatus){
+        newTodoImportant.classList.remove('important-active')
+    }
+    if (urgentlyStatus){
+        newTodoUrgently.classList.remove('urgently-active')
+    }
+
+    var todo = new Todo(uniqId(), newTodoInput.val(), importantStatus, urgentlyStatus);
     todo.draw();
     saveTodo(todo);
     newTodoInput.val('');
+
+    importantStatus = false;
+    urgentlyStatus = false;
 }
+
 function getTodos(callback) {
     ext.get('todos', callback);
 }
@@ -53,8 +79,44 @@ getTodos((data) => {
     console.log(data);
     Object.keys(data.todos).forEach((id) => {
         console.log(data.todos[id]);
-        var todo = new Todo(id, data.todos[id].text, data.todos[id].time);
+        var todo = new Todo(id, data.todos[id].text, data.todos[id].important, data.todos[id].urgently, data.todos[id].time);
         todo.draw();
-        todos[id] = { id: todo.id, text: todo.text, time: todo.time};
+        todos[id] = { id: todo.id, text: todo.text, important: todo.important, urgently: todo.urgently, time: todo.time};
     });
+});
+
+
+$(document).on('input', '.todo-text', function (e) {
+    var id = parseInt(this.closest('.todo').id.replace('todo_', ''));
+    var todo = todos[id];
+    todo.text = this.value;
+    saveTodo(todo);
+});
+
+$(document).on('click', '.important:not(#newTodoImportant)', function (e) {
+    var id = parseInt(this.closest('.todo').id.replace('todo_', ''));
+    var todo = todos[id];
+
+    todo.important = !todo.important;
+    if (todo.important){
+        this.classList.add('important-active');
+    } else {
+        this.classList.remove('important-active');
+    }
+
+    saveTodo(todo);
+});
+
+$(document).on('click', '.urgently:not(#newTodoUrgently)', function (e) {
+    var id = parseInt(this.closest('.todo').id.replace('todo_', ''));
+    var todo = todos[id];
+
+    todo.urgently = !todo.urgently;
+    if (todo.urgently){
+        this.classList.add('urgently-active');
+    } else {
+        this.classList.remove('urgently-active');
+    }
+
+    saveTodo(todo);
 });
