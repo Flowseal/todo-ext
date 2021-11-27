@@ -20,6 +20,8 @@ class Todo{
             document.querySelector(`#todo_${this.id}`).querySelector('.urgently').classList.add('urgently-active');
         }
 
+        autoheight(document.querySelector(`#todo_${this.id}`).querySelector('.todo-text'))
+
         $(`#completeBtn_${this.id}`).on('click', ()=>{
             deleteTodo(this);
             this.delete();

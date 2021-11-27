@@ -85,13 +85,30 @@ getTodos((data) => {
     });
 });
 
+function autoheight(a) {
+    if (!$(a).prop('scrollTop')) {
+        do {
+            var b = $(a).prop('scrollHeight');
+            var h = $(a).height();
+            $(a).height(h - 5);
+        }
+        while (b && (b != $(a).prop('scrollHeight')));
+    };
+    $(a).height($(a).prop('scrollHeight'));
+}
 
 $(document).on('input', '.todo-text', function (e) {
     var id = parseInt(this.closest('.todo').id.replace('todo_', ''));
     var todo = todos[id];
     todo.text = this.value;
     saveTodo(todo);
+       
+    autoheight($(this))
 });
+$(document).on('keypress', '.todo-text', function (e) {
+    if(e.which == 13) e.preventDefault();
+});
+
 
 $(document).on('click', '.important:not(#newTodoImportant)', function (e) {
     var id = parseInt(this.closest('.todo').id.replace('todo_', ''));
