@@ -215,7 +215,15 @@ body {
   animation-duration        : 0.4s;
   animation-fill-mode       : forwards;
 }
-
+.todo-error {
+  position: relative;
+  animation: shake .1s linear;
+  animation-iteration-count: 3;
+}
+@keyframes shake {
+  0% { left: -5px; }
+  100% { right: -5px; }
+}
 .todo:hover
 {
   border: solid rgb(194, 194, 194);
@@ -385,40 +393,41 @@ body {
 }
 
 .important {
-  width: 12px;
-  height:12px;
-
   -webkit-transition: filter 0.25s ease-out;
   -ms-transition: filter 0.25s ease-out;
   transition: filter   0.25s ease-out;
 
-  filter: invert(88%) sepia(11%) saturate(1248%) hue-rotate(315deg) brightness(102%) contrast(95%);
+  filter: invert(88%) sepia(11%) saturate(1248%) hue-rotate(315deg) brightness(102%) contrast(95%) grayscale(100%);
 }
 
 .important-active {
-  filter: invert(70%) sepia(80%) saturate(675%) hue-rotate(310deg) brightness(116%) contrast(103%);
+  filter: invert(70%) sepia(80%) saturate(675%) hue-rotate(310deg) brightness(116%) contrast(103%) grayscale(0%);
 }
-
 .important:hover {
-  filter: invert(70%) sepia(80%) saturate(675%) hue-rotate(310deg) brightness(116%) contrast(103%);
+  filter: invert(70%) sepia(80%) saturate(675%) hue-rotate(310deg) brightness(116%) contrast(103%) grayscale(100%);
+}
+.important-active:hover {
+  filter: invert(70%) sepia(80%) saturate(675%) hue-rotate(310deg) brightness(116%) contrast(103%) grayscale(0%);
 }
 
 .urgently {
-  -webkit-transition: filter 0.25s ease-out;
-  -ms-transition: filter 0.25s ease-out;
-  transition: filter   0.25s ease-out;
+  -webkit-transition: filter 0.15s ease-out;
+  -ms-transition: filter 0.15s ease-out;
+  transition: filter   0.15s ease-out;
 
-  filter: invert(90%) sepia(17%) saturate(213%) hue-rotate(129deg) brightness(94%) contrast(91%);
+  filter: invert(90%) sepia(17%) saturate(213%) hue-rotate(129deg) brightness(94%) contrast(91%) grayscale(100%);
 }
 
 .urgently-active {
-  filter: invert(72%) sepia(28%) saturate(483%) hue-rotate(128deg) brightness(95%) contrast(88%);
+  filter: invert(72%) sepia(28%) saturate(483%) hue-rotate(128deg) brightness(95%) contrast(88%) grayscale(0%);
 }
 
 .urgently:hover {
-  filter: invert(72%) sepia(28%) saturate(483%) hue-rotate(128deg) brightness(95%) contrast(88%);
+  filter: invert(72%) sepia(28%) saturate(483%) hue-rotate(128deg) brightness(95%) contrast(88%) grayscale(100%);
 }
-
+.urgently-active:hover {
+  filter: invert(72%) sepia(28%) saturate(483%) hue-rotate(128deg) brightness(95%) contrast(88%) grayscale(0%);
+}
 .completeBtn {
   -webkit-transition: filter 0.25s ease-out;
   -ms-transition: filter 0.25s ease-out;
