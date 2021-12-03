@@ -15,7 +15,11 @@ var newTodoImportant = $('#newTodoImportant');
 var newTodoUrgently = $('#newTodoUrgently');
 var importantStatus = false, urgentlyStatus = false;
 var search = $('#search');
+var newProjectBtn = $('#newProjectBtn');
 
+newProjectBtn.on('click', ()=>{
+
+});
 newTodoImportant.on('click', () => {
     importantStatus = !importantStatus;
     if (importantStatus) {
@@ -38,20 +42,27 @@ newTodoInput.on('keydown', (e) => {
         createTodo();
     }
 });
-search.on('input', () => {
+search.on('input', doSearch);
+function doSearch(){
     for (var i of Object.keys(todos[activeProject])) {
-        if (todos[activeProject][i].text.includes(search.val())) {
+        if (todos[activeProject][i].text.toLowerCase().includes(search.val().toLowerCase())) {
             console.log(activeProject, i)
             todos[activeProject][i].show();
         } else {
             todos[activeProject][i].hide();
         }
-
     }
-});
-
+}
 function createTodo() {
     if (!!!newTodoInput.val()) return;
+    if (newTodoInput.val().length > 999){
+        newTodoInput.addClass('todo-error');
+        setTimeout(()=>{
+            newTodoInput.removeClass('todo-error');
+        }, 1000);
+        newTodoInput.val('');
+        return;
+    }
     if (importantStatus) {
         newTodoImportant.removeClass('important-active');
     }
@@ -69,8 +80,12 @@ function getUniqId() {
     return Math.round(new Date().getTime() + (Math.random() * 100));
 }
 function saveTodo(todo) {
-    todos[todo.project][todo.id] = todo;
-    ext.set({ 'todos': todos });
+    try{
+        todos[todo.project][todo.id] = todo;
+        ext.set({ 'todos': todos });
+    } catch (err){
+        console.log(`Не смогли сохранить туду! ` + err);
+    }
 }
 function deleteTodo(todo) {
     oldTodos[todo.id] = todo;
@@ -91,6 +106,7 @@ function openProject(projectName) {
         todos[projectName][id].draw();
     }
     $('#category_span').html(projectName);
+    doSearch();
 }
 
 ext.get('todos', (data) => {

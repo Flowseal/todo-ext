@@ -48,11 +48,9 @@
                     <span>Other</span>
                 </div>
 
-                <div class="project cursor noselect" id="new-project">
+                <div class="project cursor noselect" id="newProjectBtn">
                     <img src='svgs/New.svg' />
-                    <span>
-                        New Project
-                    </span>
+                    <span>New Project</span>
                 </div>
             </div>
 
@@ -84,15 +82,13 @@
                 <div id="todos">
                 </div>
                 <div class="todo-new">
-                    <img src='svgs/Coming.svg' class="cursor noselect"/>
-                    <input type="text" id="newTodoInput" class="form-control" placeholder="don't forget to" aria-label="don't forget to" aria-describedby="basic-addon1">
-                    
                     <div style="padding-left: 4px; padding-right: 4px; display: flex; gap: 4px;">
-                        <img src='svgs/Vajno.svg' id="newTodoImportant" class="important cursor noselect" style="width: 12px; height:12px;"/>
-                        <img src='svgs/Srochno.svg' id="newTodoUrgently" class="urgently cursor noselect" style="width: 12px; height:12px;"/>
+                        <img src='svgs/Vajno.svg' id="newTodoImportant" class="important cursor noselect def-svg"/>
+                        <img src='svgs/Srochno.svg' id="newTodoUrgently" class="urgently cursor noselect def-svg"/>
                     </div>
+                    <input type="text" id="newTodoInput" class="form-control" placeholder="don't forget to" aria-label="don't forget to" aria-describedby="basic-addon1">
 
-                    <img src='svgs/Ok.svg' class="cursor noselect" style="width: 16px; height: 16px;" id="newTodoBtn"/>
+                    <img src='svgs/Ok.svg' class="cursor noselect okBtn" style="width: 20px; height: 20px;" id="newTodoBtn"/>
                 </div>
         </div>
     </div>
@@ -103,11 +99,11 @@
                 <textarea type="text" class="todo-text" id="text_{{id}}">{{text}}</textarea>
             </div>
             <div id="top-right" style="display: flex; gap: 5px; margin-right: -15px;">
-                <img src='svgs/Vajno.svg' id="important_{{id}}" class="important cursor noselect" style="width: 12px; height:12px;" />
-                <img src='svgs/Srochno.svg' id="urgently_{{id}}" class="urgently cursor noselect" style="width: 12px; height: 12px;"/>
+                <img src='svgs/Vajno.svg' id="important_{{id}}" class="important cursor noselect" style="width: 16px; height:16px;" />
+                <img src='svgs/Srochno.svg' id="urgently_{{id}}" class="urgently cursor noselect" style="width: 16px; height: 16px;"/>
             </div>
             <div id="bottom-right">
-                <img src='svgs/Ok.svg' id="completeBtn_{{id}}" class="cursor noselect" style="width: 16px; height: 16px;"/>
+                <img src='svgs/Ok.svg' id="completeBtn_{{id}}" class="cursor noselect okBtn" style="width: 18px; height: 18px;"/>
             </div>
         </div>
     </script>

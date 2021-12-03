@@ -10,7 +10,10 @@ body {
   background: white; 
   border-width: 1px;
 }
-
+.def-svg{
+  width: 16px;
+  height:16px;
+}
 .header {
   max-width: 100%;
   height: 41px;
@@ -94,7 +97,7 @@ body {
   padding-left: 6px;
 }
 
-#new-project{
+#newProjectBtn{
   -webkit-transition: color 0.2s ease-out;
   -ms-transition: color 0.2s ease-out;
   transition: color 0.2s ease-out;
@@ -102,11 +105,11 @@ body {
   color: rgba(32, 32, 32, 0.5)
 }
 
-#new-project:hover{
+#newProjectBtn:hover{
   color: rgba(32, 32, 32, 0.8)
 }
 
-#new-project img {
+#newProjectBtn img {
   -webkit-transition: filter 0.2s ease-out;
   -ms-transition: filter 0.2s ease-out;
   transition: filter   0.2s ease-out;
@@ -114,7 +117,7 @@ body {
   filter: invert(60%) sepia(0%) saturate(476%) hue-rotate(161deg) brightness(91%) contrast(89%);
 }
 
-#new-project:hover img {
+#newProjectBtn:hover img {
   filter: invert(3%) sepia(16%) saturate(28%) hue-rotate(314deg) brightness(99%) contrast(85%);
 }
 
@@ -176,9 +179,15 @@ body {
   padding: 7px 93px;
   height: 265px;
 }
-#todos::-webkit-scrollbar {
-  width: 7px;
-  background-color: #f9f9fd;
+::-webkit-scrollbar {
+  width: 6px; 
+  height: 6px; 
+  background-color: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #BDBDBD;
+  border-radius: 3px;
 }
 
 @keyframes todo-appearing {
@@ -237,11 +246,11 @@ body {
   font-size: 13px;
 }
 
-.todo textarea {
+textarea {
   font-family: Segoe UI;
   font-style: normal;
   font-weight: normal;
-  font-size: 13px;
+  font-size: 14px;
 
   overflow:hidden;
   resize: none;
@@ -255,12 +264,12 @@ body {
   padding: 0px;
 }
 
-.todo textarea:hover {
+textarea:hover {
   outline: 0px solid rgba(194, 194, 194, 0.0);
   cursor: default;
 }
 
-.todo textarea:focus {
+textarea:focus {
   background-color: rgba(247, 247, 247, 0.0);
   cursor:text;
 
@@ -274,7 +283,7 @@ body {
   font-style: normal;
   font-weight: normal;
   font-size: 9px;
-
+  padding: 5px 5px 5px 0px;
   color: rgb(128, 128, 128);
 }
 
@@ -417,7 +426,14 @@ body {
 
   filter: invert(90%) sepia(17%) saturate(213%) hue-rotate(129deg) brightness(94%) contrast(91%) grayscale(100%);
 }
-
+.okBtn {
+  -webkit-transition: filter 0.25s ease-out;
+  -ms-transition: filter 0.25s ease-out;
+  transition: filter   0.25s ease-out;
+}
+.okBtn:hover{
+  filter: invert(64%) sepia(60%) saturate(613%) hue-rotate(86deg) brightness(94%) contrast(91%);
+}
 .urgently-active {
   filter: invert(72%) sepia(28%) saturate(483%) hue-rotate(128deg) brightness(95%) contrast(88%) grayscale(0%);
 }
