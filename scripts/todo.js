@@ -11,7 +11,7 @@ class Todo {
         var html = document.getElementById('todoTemplate').innerHTML;
         var template = Handlebars.compile(html);
         var data = template({ id: this.id, text: this.text, time: date.format(new Date(this.time), 'MM dd hh:mm') });
-        document.getElementById(`todos`).insertAdjacentHTML("beforeend", data);
+        document.querySelector('.todos').insertAdjacentHTML("beforeend", data);
         let todo = $(`#todo_${this.id}`);
         let importantEl = $(`#important_${this.id}`);
         let urgentlyEl = $(`#urgently_${this.id}`);
@@ -50,12 +50,13 @@ class Todo {
             this.autoheight();
         }); 
         todoTextEl.on('change', ()=>{   
-            if (!!!todoTextEl.val()){
+            if (!!!todoTextEl.val() || todoTextEl.val().length > 999){
                 todo.addClass('todo-error');
                 setTimeout(()=>{
                     todo.removeClass('todo-error');
                 }, 1000);
                 todoTextEl.val(this.text);
+                this.autoheight();
                 return;
             }
             this.text = todoTextEl.val();

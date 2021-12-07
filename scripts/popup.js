@@ -16,16 +16,25 @@ var newTodoUrgently = $('#newTodoUrgently');
 var importantStatus = false, urgentlyStatus = false;
 var search = $('#search');
 var newProjectBtn = $('#newProjectBtn');
+var projectsBtn = $('#projectsBtn');
 
+projectsBtn.on('click', ()=>{
+    var projects = $('.projects-block');
+    if (projects.is(':visible')){
+        projects.hide();
+    } else {
+        projects.show();
+    }
+});
 newProjectBtn.on('click', ()=>{
-
+    prompt('Хотите создать новый проект?');
 });
 newTodoImportant.on('click', () => {
     importantStatus = !importantStatus;
     if (importantStatus) {
         newTodoImportant.addClass('important-active');
     } else {
-        newTodoImportant.removeClass('important-active')
+        newTodoImportant.removeClass('important-active');
     }
 });
 newTodoUrgently.on('click', () => {
@@ -33,7 +42,7 @@ newTodoUrgently.on('click', () => {
     if (urgentlyStatus) {
         newTodoUrgently.addClass('urgently-active');
     } else {
-        newTodoUrgently.removeClass('urgently-active')
+        newTodoUrgently.removeClass('urgently-active');
     }
 });
 newTodoBtn.on('click', createTodo);
@@ -108,29 +117,33 @@ function openProject(projectName) {
     $('#category_span').html(projectName);
     doSearch();
 }
-
-ext.get('todos', (data) => {
-    if (!data.todos || !data.todos.Today || !data.todos.Coming){
-        ext.set({todos:{Today:{}, Coming:{}}, activeProject:'Today'});
-    }
-    for (var i of Object.keys(data.todos)) {
-        var projectTodos = data.todos[i];
-        if (!!!todos[i]) todos[i] = {};
-        for (var id of Object.keys(projectTodos)) {
-            console.log(id);
-            var todo = new Todo(id, i, projectTodos[id].text, projectTodos[id].important, projectTodos[id].urgently, projectTodos[id].time);
-            //todo.draw();
-            todos[i][id] = todo;
+loadData();
+function loadData(){
+    ext.get('todos', (data) => {
+        if (!data.todos || !data.todos.Today || !data.todos.Coming){
+            ext.set({todos:{Today:{}, Coming:{}}, activeProject:'Today'}, loadData);
+            return;
         }
-    }
-    for (let i of Object.keys(todos)){
-        $(`#${i}ProjectBtn`).on('click', ()=>{
-            openProject(i);
+        for (var i of Object.keys(data.todos)) {
+            var projectTodos = data.todos[i];
+            if (!!!todos[i]) todos[i] = {};
+            for (var id of Object.keys(projectTodos)) {
+                console.log(id);
+                var todo = new Todo(id, i, projectTodos[id].text, projectTodos[id].important, projectTodos[id].urgently, projectTodos[id].time);
+                //todo.draw();
+                todos[i][id] = todo;
+            }
+        }
+        for (let i of Object.keys(todos)){
+            $(`#${i}ProjectBtn`).on('click', ()=>{
+                openProject(i);
+            });
+        }
+        ext.get('activeProject', (data) => {
+            openProject(data.activeProject);
+            console.log(data);
         });
-    }
-    ext.get('activeProject', (data) => {
-        openProject(data.activeProject);
-        console.log(data);
+        console.log(todos);
     });
-    console.log(todos);
-});
+    
+}
