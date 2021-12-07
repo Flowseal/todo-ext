@@ -64,11 +64,15 @@ body {
   font-weight: 600;
   font-size: 18px;
 }
-#sort_span {
-  font-family: Segoe UI;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
+#sort {
+  user-select: none;
+  cursor: pointer;
+  display: flex;
+  padding-left: 5px;
+  margin-bottom: 5px;
+}
+#sort span{
+  margin-right: 5px;
 }
 @keyframes todo-appearing {
   from { 
