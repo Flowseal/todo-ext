@@ -17,12 +17,17 @@ var importantStatus = false, urgentlyStatus = false;
 var search = $('#search');
 var newProjectBtn = $('#newProjectBtn');
 var projectsBtn = $('#projectsBtn');
+var projectsArrow = projectsBtn.find('img')
 
 projectsBtn.on('click', ()=>{
     var projects = $('.projects-block');
     if (projects.is(':visible')){
-        projects.hide();
+        projectsArrow.removeClass('rotate')
+        projects.fadeTo( 200, 0 )
+        projects.hide()   
     } else {
+        projectsArrow.addClass('rotate')
+        projects.fadeTo(200, 1)
         projects.show();
     }
 });
