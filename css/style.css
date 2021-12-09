@@ -230,7 +230,7 @@ textarea:focus {
   margin-bottom: 30px;
 }
 #projects{
-  min-height: 100px;
+  min-height: 30px;
   max-height: 200px;
   overflow-y: overlay;
 }
