@@ -44,7 +44,13 @@ newProjectBtn.on('click', () => {
     if (!!projectName && projectName.length < 999) {
         todos[projectName] = {};
         ext.set({ 'todos': todos });
-        $(`#projects`).prepend(`<li class="cursor menu-el" id="${projectName}ProjectBtn"><img src="./svgs/AlertCircle.svg"><span class="menu-txt">${projectName}</span></li>`);
+        $(`#projects`).prepend(`<li class="cursor menu-el project" id="${projectName.split(' ').join('')}ProjectBtn"><div><img src="./svgs/AlertCircle.svg"><span class="menu-txt">${projectName}</span></div><img id="${projectName.split(' ').join('')}ProjectDelete" class="menu-delete" src="./svgs/Bin.svg"></li>`);
+        $(`#${projectName.split(' ').join('')}ProjectDelete`).hide();
+        $(`#${projectName.split(' ').join('')}ProjectBtn`).hover(()=>{
+            $(`#${projectName.split(' ').join('')}ProjectDelete`).show();
+        }, ()=>{
+            $(`#${projectName.split(' ').join('')}ProjectDelete`).hide();
+        });
         $(`#${projectName}ProjectBtn`).on('click', ()=>{
             openProject(projectName);
         });
