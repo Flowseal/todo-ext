@@ -1,10 +1,9 @@
 const ext = chrome.extension.getBackgroundPage();
 var todos = {
-    Today: {},
-    Coming: {},
-    School: {},
-    Work: {},
-    Other: {}
+    today: {},
+    coming: {},
+    unsorted: {},
+    archived: {}
 };
 var activeProject = 'Today';
 var oldTodos = {};
@@ -18,16 +17,33 @@ var search = $('#search');
 var newProjectBtn = $('#newProjectBtn');
 var projectsBtn = $('#projectsBtn');
 
-projectsBtn.on('click', ()=>{
+projectsBtn.on('click', () => {
     var projects = $('.projects-block');
-    if (projects.is(':visible')){
+    if (projects.is(':visible')) {
         projects.hide();
     } else {
         projects.show();
     }
 });
-newProjectBtn.on('click', ()=>{
-    prompt('Хотите создать новый проект?');
+newProjectBtn.on('click', () => {
+    var projectName = prompt('Имя проекта: ');
+    if (!!todos[projectName]){
+        alert('Такой проект уже существует!');
+        return;
+    }
+    if (!/^[a-zа-яA-ZА-Я0-9_ -№$@!]{3,16}$/.test(projectName) || projectName.includes('.') || projectName.includes(',')){
+        alert('Название проекта содержит некорректные символы!');
+        return;
+    }
+    if (projectName)
+    if (!!projectName && projectName.length < 999) {
+        todos[projectName] = {};
+        ext.set({ 'todos': todos });
+        $(`#projects`).prepend(`<li class="cursor menu-el" id="${projectName}ProjectBtn"><img src="./svgs/AlertCircle.svg"><span class="menu-txt">${projectName}</span></li>`);
+        $(`#${projectName}ProjectBtn`).on('click', ()=>{
+            openProject(projectName);
+        });
+    }
 });
 newTodoImportant.on('click', () => {
     importantStatus = !importantStatus;
@@ -52,7 +68,7 @@ newTodoInput.on('keydown', (e) => {
     }
 });
 search.on('input', doSearch);
-function doSearch(){
+function doSearch() {
     for (var i of Object.keys(todos[activeProject])) {
         if (todos[activeProject][i].text.toLowerCase().includes(search.val().toLowerCase())) {
             console.log(activeProject, i)
@@ -64,9 +80,9 @@ function doSearch(){
 }
 function createTodo() {
     if (!!!newTodoInput.val()) return;
-    if (newTodoInput.val().length > 999){
+    if (newTodoInput.val().length > 999) {
         newTodoInput.addClass('todo-error');
-        setTimeout(()=>{
+        setTimeout(() => {
             newTodoInput.removeClass('todo-error');
         }, 1000);
         newTodoInput.val('');
@@ -89,10 +105,10 @@ function getUniqId() {
     return Math.round(new Date().getTime() + (Math.random() * 100));
 }
 function saveTodo(todo) {
-    try{
+    try {
         todos[todo.project][todo.id] = todo;
         ext.set({ 'todos': todos });
-    } catch (err){
+    } catch (err) {
         console.log(`Не смогли сохранить туду! ` + err);
     }
 }
@@ -104,46 +120,80 @@ function deleteTodo(todo) {
 }
 function openProject(projectName) {
     activeProject = projectName;
-    for (var i of Object.keys(todos)){
-        $(`#${i}ProjectBtn`).removeClass('type_btn_selected');
+    ext.set({'activeProject':activeProject});
+    console.log(`Открываю проект ${projectName}`);
+    for (let i of Object.keys(todos)){
+        $(`#${i.split(' ').join('')}ProjectBtn`).removeClass('menu-el_selected');
+    }
+    $(`#${projectName.split(' ').join('')}ProjectBtn`).addClass('menu-el_selected');
+    if (projectName == 'unsorted'){
+        console.log('тут выполняется шиза');
+    }
+    for (var i of Object.keys(todos)) {
         for (var id of Object.keys(todos[i])) {
             todos[i][id].delete();
         }
     }
+    for (var id of Object.keys(todos[projectName])) {
+        todos[projectName][id].draw();
+    }
+    $('#category_span').html(projectName[0].toUpperCase() + projectName.slice(1));
+    doSearch();
+    /*
     $(`#${projectName}ProjectBtn`).addClass('type_btn_selected');
     for (var id of Object.keys(todos[projectName])) {
         todos[projectName][id].draw();
     }
     $('#category_span').html(projectName);
-    doSearch();
+    doSearch();*/
+}
+function openUnsorted() {
+
 }
 loadData();
-function loadData(){
+function loadData() {
     ext.get('todos', (data) => {
-        if (!data.todos || !data.todos.Today || !data.todos.Coming){
-            ext.set({todos:{Today:{}, Coming:{}}, activeProject:'Today'}, loadData);
+        if (!data.todos) {
+            ext.set({ todos: todos, activeProject: 'today' }, loadData);
             return;
         }
-        for (var i of Object.keys(data.todos)) {
-            var projectTodos = data.todos[i];
-            if (!!!todos[i]) todos[i] = {};
-            for (var id of Object.keys(projectTodos)) {
+        console.log(data);
+        console.log(todos);
+        for (let i of Object.keys(data.todos)) {
+            console.log(i);
+            if (!!!todos[i]) {
+                console.log(`Отрисовываю ${i}`)
+                todos[i] = {};
+                $(`#projects`).prepend(`<li class="cursor menu-el project" id="${i.split(' ').join('')}ProjectBtn"><div><img src="./svgs/AlertCircle.svg"><span class="menu-txt">${i}</span></div><img id="${i.split(' ').join('')}ProjectDelete" class="menu-delete" src="./svgs/Bin.svg"></li>`);
+            }
+            $(`#${i.split(' ').join('')}ProjectBtn`).on('click', () => {
+                openProject(i);
+            });
+            $(`#${i.split(' ').join('')}ProjectDelete`).hide();
+            $(`#${i.split(' ').join('')}ProjectBtn`).hover(()=>{
+                $(`#${i.split(' ').join('')}ProjectDelete`).show();
+            }, ()=>{
+                $(`#${i.split(' ').join('')}ProjectDelete`).hide();
+            });
+            $(`#${i.split(' ').join('')}ProjectDelete`).on('click', () => {
+                if (confirm(`Вы действительно хотите удалить проект: ${i}`)){
+                    $(`#${i.split(' ').join('')}ProjectBtn`).remove();
+                    openProject('today');
+                    delete todos[i];
+                    ext.set({todos:todos});
+                }
+            });
+            for (var id of Object.keys(data.todos[i])) {
                 console.log(id);
-                var todo = new Todo(id, i, projectTodos[id].text, projectTodos[id].important, projectTodos[id].urgently, projectTodos[id].time);
+                var todo = new Todo(id, i, data.todos[i][id].text, data.todos[i][id].important, data.todos[i][id].urgently, data.todos[i][id].time);
                 //todo.draw();
                 todos[i][id] = todo;
             }
         }
-        for (let i of Object.keys(todos)){
-            $(`#${i}ProjectBtn`).on('click', ()=>{
-                openProject(i);
-            });
-        }
+        console.log(todos);
         ext.get('activeProject', (data) => {
             openProject(data.activeProject);
-            console.log(data);
         });
-        console.log(todos);
     });
-    
+
 }
