@@ -2,6 +2,7 @@ ul {
   list-style: none;
 }
 body {
+  width: 800px;
   border: 3px solid rgb(219, 76, 63);
   font-size: 16px;
 }
@@ -38,6 +39,8 @@ body {
   -o-transform:       rotate(180deg);
 }
 .content {
+  height: 400px;
+  width: 100%;
   padding: 10px;
 }
 .content_top {

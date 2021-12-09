@@ -6,7 +6,6 @@ var todos = {
     archived: {}
 };
 var activeProject = 'Today';
-var oldTodos = {};
 var newTodoInput = $('#newTodoInput');
 newTodoInput.focus();
 var newTodoBtn = $('#newTodoBtn');
@@ -34,6 +33,9 @@ newProjectBtn.on('click', () => {
     var projectName = prompt('Имя проекта: ');
     if (!!todos[projectName]){
         alert('Такой проект уже существует!');
+        return;
+    }
+    if (!projectName){
         return;
     }
     if (!/^[a-zа-яA-ZА-Я0-9_ -№$@!]{3,16}$/.test(projectName) || projectName.includes('.') || projectName.includes(',')){
@@ -80,6 +82,20 @@ newTodoInput.on('keydown', (e) => {
 });
 search.on('input', doSearch);
 function doSearch() {
+    console.log(activeProject);
+    if (activeProject == 'unsorted'){
+        console.log('!');
+        for (var i of Object.keys(todos)) {
+            for (var j of Object.keys(todos[i])){
+                if (todos[i][j].text.toLowerCase().includes(search.val().toLowerCase())) {
+                    todos[i][j].show();
+                } else {
+                    todos[i][j].hide();
+                }
+            }
+        }
+        return;
+    }
     for (var i of Object.keys(todos[activeProject])) {
         if (todos[activeProject][i].text.toLowerCase().includes(search.val().toLowerCase())) {
             console.log(activeProject, i)
@@ -118,18 +134,35 @@ function getUniqId() {
 function saveTodo(todo) {
     try {
         todos[todo.project][todo.id] = todo;
-        ext.set({ 'todos': todos });
+        var todosToSave = {};
+        console.log(todo);
+        for (var i of Object.keys(todos)){
+            if (!todosToSave[i]){
+                todosToSave[i] = {};
+            }
+            for (var id of Object.keys(todos[i])){
+                var todo = todos[i][id];
+                todosToSave[i][id] = {id:todo.id, prject: todo.project, text: todo.text, important: todo.important, urgently: todo.urgently, time: todo.time};
+            }
+        }
+        console.log(todosToSave);
+        ext.set({ 'todos': todosToSave });
     } catch (err) {
         console.log(`Не смогли сохранить туду! ` + err);
     }
 }
 function deleteTodo(todo) {
-    oldTodos[todo.id] = todo;
+    todos.archived[todo.id] = todo;
     delete todos[todo.project][todo.id];
+    console.log(todos);
     ext.set({ 'todos': todos });
-    ext.set({ 'oldTodos': oldTodos });
 }
 function openProject(projectName) {
+    if (projectName == 'archived' || projectName == 'unsorted'){
+        $('.todo-new').hide();
+    } else {
+        $('.todo-new').show();
+    }
     activeProject = projectName;
     ext.set({'activeProject':activeProject});
     console.log(`Открываю проект ${projectName}`);
@@ -137,30 +170,27 @@ function openProject(projectName) {
         $(`#${i.split(' ').join('')}ProjectBtn`).removeClass('menu-el_selected');
     }
     $(`#${projectName.split(' ').join('')}ProjectBtn`).addClass('menu-el_selected');
-    if (projectName == 'unsorted'){
-        console.log('тут выполняется шиза');
-    }
     for (var i of Object.keys(todos)) {
         for (var id of Object.keys(todos[i])) {
             todos[i][id].delete();
         }
     }
-    for (var id of Object.keys(todos[projectName])) {
-        todos[projectName][id].draw();
+    if (projectName == 'unsorted'){
+        for (var i of Object.keys(todos)) {
+            if (i == 'archived') continue;
+            for (var j of Object.keys(todos[i])){
+                todos[i][j].draw();
+            }
+        }
+    } else {
+        for (var id of Object.keys(todos[projectName])) {
+            todos[projectName][id].draw();
+        }
     }
     $('#category_span').html(projectName[0].toUpperCase() + projectName.slice(1));
     doSearch();
-    /*
-    $(`#${projectName}ProjectBtn`).addClass('type_btn_selected');
-    for (var id of Object.keys(todos[projectName])) {
-        todos[projectName][id].draw();
-    }
-    $('#category_span').html(projectName);
-    doSearch();*/
 }
-function openUnsorted() {
 
-}
 loadData();
 function loadData() {
     ext.get('todos', (data) => {
