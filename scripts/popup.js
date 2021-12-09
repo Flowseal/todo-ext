@@ -53,6 +53,14 @@ newProjectBtn.on('click', () => {
         }, ()=>{
             $(`#${projectName.split(' ').join('')}ProjectDelete`).hide();
         });
+        $(`#${projectName.split(' ').join('')}ProjectDelete`).on('click', () => {
+            if (confirm(`Вы действительно хотите удалить проект: ${projectName}`)){
+                $(`#${projectName.split(' ').join('')}ProjectBtn`).remove();
+                openProject('today');
+                delete todos[projectName];
+                updateTodos();
+            }
+        });
         $(`#${projectName}ProjectBtn`).on('click', ()=>{
             openProject(projectName);
         });
@@ -135,18 +143,7 @@ function saveTodo(todo) {
     try {
         todos[todo.project][todo.id] = todo;
         var todosToSave = {};
-        console.log(todo);
-        for (var i of Object.keys(todos)){
-            if (!todosToSave[i]){
-                todosToSave[i] = {};
-            }
-            for (var id of Object.keys(todos[i])){
-                var todo = todos[i][id];
-                todosToSave[i][id] = {id:todo.id, prject: todo.project, text: todo.text, important: todo.important, urgently: todo.urgently, time: todo.time};
-            }
-        }
-        console.log(todosToSave);
-        ext.set({ 'todos': todosToSave });
+        updateTodos();
     } catch (err) {
         console.log(`Не смогли сохранить туду! ` + err);
     }
@@ -154,8 +151,20 @@ function saveTodo(todo) {
 function deleteTodo(todo) {
     todos.archived[todo.id] = todo;
     delete todos[todo.project][todo.id];
-    console.log(todos);
-    ext.set({ 'todos': todos });
+    updateTodos();
+}
+function updateTodos(){
+    var todosToSave = {};
+    for (var i of Object.keys(todos)){
+        if (!todosToSave[i]){
+            todosToSave[i] = {};
+        }
+        for (var id of Object.keys(todos[i])){
+            var todo = todos[i][id];
+            todosToSave[i][id] = {id:todo.id, prject: todo.project, text: todo.text, important: todo.important, urgently: todo.urgently, time: todo.time};
+        }
+    }
+    ext.set({ 'todos': todosToSave });
 }
 function openProject(projectName) {
     if (projectName == 'archived' || projectName == 'unsorted'){
