@@ -17,26 +17,38 @@
     <div class="main">
         <div class="left_bar">
             <ul class="menu">
-                <li class="cursor menu-el" id="todayProjectBtn"><img src="./svgs/Today.svg"><span class="menu-txt">Today</span></li>
-                <li class="cursor menu-el" id="comingProjectBtn"><img src="./svgs/Coming.svg"><span class="menu-txt">Coming</span></li>
-                
+                <li class="cursor menu-el" id="todayProjectBtn"><img src="./svgs/Today.svg"><span
+                        class="menu-txt">Today</span></li>
+                <li class="cursor menu-el" id="comingProjectBtn"><img src="./svgs/Coming.svg"><span
+                        class="menu-txt">Coming</span></li>
+
                 <li id="custom_projects">
                     <ul>
-                        <li class="cursor menu-el" id="projectsBtn"><img src="./svgs/ArrowOpened.svg"><span class="menu-txt">Projects</span></li>
+                        <li class="cursor menu-el" id="projectsBtn"><img src="./svgs/ArrowOpened.svg"><span
+                                class="menu-txt">Projects</span></li>
                         <ul class="projects-block" id="projects">
-                            <li class="cursor menu-el" id="newProjectBtn"><img src="./svgs/New.svg"><span class="menu-txt">New project</span></li>
+                            <li class="cursor menu-el" id="newProjectBtn"><img src="./svgs/New.svg"><span
+                                    class="menu-txt">New project</span></li>
                         </ul>
                     </ul>
                 </li>
-                <li class="cursor menu-el" id="unsortedProjectBtn"><img src="./svgs/List.svg"><span class="menu-txt">Unsorted</span></li>
-                <li class="cursor menu-el" id="archivedProjectBtn"><img src="./svgs/Archived.svg"><span class="menu-txt">Archived</span></li>
+                <li class="cursor menu-el" id="unsortedProjectBtn"><img src="./svgs/List.svg"><span
+                        class="menu-txt">Unsorted</span></li>
+                <li class="cursor menu-el" id="archivedProjectBtn"><img src="./svgs/Archived.svg"><span
+                        class="menu-txt">Archived</span></li>
             </ul>
         </div>
         <div class="content">
             <div class="content_top noselect">
                 <span id="category_span">Today</span>
                 <div id="sort">
-                    <span>Sort by</span><img src="./svgs/Sort.svg">
+                    <span>Sort by</span>
+                    <select id="sortBy">
+                        <option value="priority">Priority</option>
+                        <option value="important">Important</option>
+                        <option value="urgently">Urgently</option>
+                        <option value="time">Time</option>
+                    </select>
                 </div>
             </div>
             <div class="todos-block">
@@ -47,11 +59,13 @@
                         <img src='svgs/Vajno.svg' id="newTodoImportant" class="important cursor noselect def-svg" />
                         <img src='svgs/Srochno.svg' id="newTodoUrgently" class="urgently cursor noselect def-svg" />
                     </div>
+
                     <input type="text" id="newTodoInput" class="form-control" placeholder="don't forget to"
                         aria-label="don't forget to" aria-describedby="basic-addon1">
-
+                        <input class="calendar" type="date" />
                     <img src='svgs/Ok.svg' class="cursor noselect okBtn" style="width: 20px; height: 20px;"
                         id="newTodoBtn" />
+                    
                 </div>
             </div>
         </div>
@@ -70,13 +84,15 @@
             </div>
         </div>
         </script>
-        
+
+
+
+
         <script src="./components/date-and-time.min.js"></script>
         <script src="./components/jquery-3.6.0.min.js"></script>
         <script src="./components/handlebars.js"></script>
         <script src="./scripts/todo.js"></script>
         <script src="./scripts/popup.js"></script>
-
 </body>
 
 </html>

@@ -19,6 +19,7 @@
     "web_accessible_resources": [
         "handlebars.js",
         "jquery.min.js",
-        "date-and-time.min.js"
+        "date-and-time.min.js",
+        "calendar.js"
     ]
 }

@@ -6,11 +6,18 @@ class Todo {
         this.time = time;
         this.important = important;
         this.urgently = urgently;
+        this.priority = 0;
+        if (this.important){
+            this.priority +=1;
+        }
+        if (this.urgently){
+            this.priority +=1;
+        }
     }
     draw() {
         var html = document.getElementById('todoTemplate').innerHTML;
         var template = Handlebars.compile(html);
-        var data = template({ id: this.id, text: this.text, time: date.format(new Date(this.time), 'MM dd hh:mm') });
+        var data = template({ id: this.id, text: this.text, time: date.format(new Date(this.time), 'DD MMM YYYY') });
         document.querySelector('.todos').insertAdjacentHTML("beforeend", data);
         let todo = $(`#todo_${this.id}`);
         let importantEl = $(`#important_${this.id}`);
@@ -30,6 +37,13 @@ class Todo {
             } else {
                 importantEl.removeClass('important-active');
             }
+            this.priority = 0;
+            if (this.important){
+                this.priority +=1;
+            }
+            if (this.urgently){
+                this.priority +=1;
+            }
             saveTodo(this);
         });
         urgentlyEl.on('click', () => {
@@ -38,6 +52,13 @@ class Todo {
                 urgentlyEl.addClass('urgently-active');
             } else {
                 urgentlyEl.removeClass('urgently-active');
+            }
+            this.priority = 0;
+            if (this.important){
+                this.priority +=1;
+            }
+            if (this.urgently){
+                this.priority +=1;
             }
             saveTodo(this);
         });

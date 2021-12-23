@@ -16,7 +16,12 @@ var search = $('#search');
 var newProjectBtn = $('#newProjectBtn');
 var projectsBtn = $('#projectsBtn');
 var projectsArrow = projectsBtn.find('img')
+var selected = $('#sortBy');
 
+selected.on('change', ()=>{
+    var value = selected.val();
+    openProject(activeProject, value);
+});
 projectsBtn.on('click', () => {
     var projects = $('.projects-block');
     if (projects.is(':visible')){
@@ -56,13 +61,13 @@ newProjectBtn.on('click', () => {
         $(`#${projectName.split(' ').join('')}ProjectDelete`).on('click', () => {
             if (confirm(`Вы действительно хотите удалить проект: ${projectName}`)){
                 $(`#${projectName.split(' ').join('')}ProjectBtn`).remove();
-                openProject('today');
+                openProject('today', selected.val());
                 delete todos[projectName];
                 updateTodos();
             }
         });
-        $(`#${projectName}ProjectBtn`).on('click', ()=>{
-            openProject(projectName);
+        $(`#${projectName.split(' ').join('')}ProjectBtn`).on('click', ()=>{
+            openProject(projectName, selected.val());
         });
     }
 });
@@ -106,7 +111,7 @@ function doSearch() {
     }
     for (var i of Object.keys(todos[activeProject])) {
         if (todos[activeProject][i].text.toLowerCase().includes(search.val().toLowerCase())) {
-            console.log(activeProject, i)
+            //console.log(activeProject, i)
             todos[activeProject][i].show();
         } else {
             todos[activeProject][i].hide();
@@ -129,7 +134,12 @@ function createTodo() {
     if (urgentlyStatus) {
         newTodoUrgently.removeClass('urgently-active');
     }
-    var todo = new Todo(getUniqId(), activeProject, newTodoInput.val(), importantStatus, urgentlyStatus);
+    var date = new Date($('body > div.main > div.content > div.todos-block > div.todo-new > input.calendar').val()) / 1;
+    if (!!!date){
+        date = new Date() / 1;
+    }
+    console.log(date);
+    var todo = new Todo(getUniqId(), activeProject, newTodoInput.val(), importantStatus, urgentlyStatus, date);
     todo.draw();
     saveTodo(todo);
     newTodoInput.val('');
@@ -166,7 +176,7 @@ function updateTodos(){
     }
     ext.set({ 'todos': todosToSave });
 }
-function openProject(projectName) {
+function openProject(projectName, sortBy) {
     if (projectName == 'archived' || projectName == 'unsorted'){
         $('.todo-new').hide();
     } else {
@@ -174,7 +184,7 @@ function openProject(projectName) {
     }
     activeProject = projectName;
     ext.set({'activeProject':activeProject});
-    console.log(`Открываю проект ${projectName}`);
+    //console.log(`Открываю проект ${projectName}`);
     for (let i of Object.keys(todos)){
         $(`#${i.split(' ').join('')}ProjectBtn`).removeClass('menu-el_selected');
     }
@@ -184,17 +194,69 @@ function openProject(projectName) {
             todos[i][id].delete();
         }
     }
+    var todosToDraw = [];
     if (projectName == 'unsorted'){
         for (var i of Object.keys(todos)) {
             if (i == 'archived') continue;
             for (var j of Object.keys(todos[i])){
-                todos[i][j].draw();
+                todosToDraw.push(todos[i][j]);
+                //todos[i][j].draw();
+            }
+        }
+    } else if (projectName == 'today') {
+        var now = new Date();
+        for (var i of Object.keys(todos)) {
+            if (i == 'archived') continue;
+            for (var j of Object.keys(todos[i])){
+                var time = new Date(todos[i][j].time);
+                if (time.toDateString() == now.toDateString()){
+                    todosToDraw.push(todos[i][j]);
+                    //todos[i][j].draw();
+                }
+            }
+        }
+    } else if (projectName == 'coming') {
+        var now = new Date();
+        for (var i of Object.keys(todos)) {
+            if (i == 'archived') continue;
+            for (var j of Object.keys(todos[i])){
+                var time = new Date(todos[i][j].time);
+                if (time >= new Date(now.toDateString()) / 1 + 86400000){
+                    todosToDraw.push(todos[i][j]);
+                    //todos[i][j].draw();
+                }
             }
         }
     } else {
         for (var id of Object.keys(todos[projectName])) {
-            todos[projectName][id].draw();
+            todosToDraw.push(todos[projectName][id]);
+            //todos[projectName][id].draw();
         }
+    }
+    todosToDraw = todosToDraw.sort((a, b)=>{
+        return a.time > b.time ? 1 : -1;
+    });
+    if (sortBy == 'important' || sortBy == 'urgently'){
+        todosToDraw = todosToDraw.sort((a, b)=>{
+            return a[sortBy] > b[sortBy] ? -1 : 1;
+        });
+        var buf = [];
+        for (var i of todosToDraw){
+            if (i[sortBy]){
+                buf.push(i);
+            }
+        }
+        todosToDraw = buf;
+    } else {
+        todosToDraw = todosToDraw.sort((a, b)=>{
+            if (sortBy == 'time'){
+                return a[sortBy] > b[sortBy] ? 1 : -1;
+            }
+            return a[sortBy] > b[sortBy] ? -1 : 1;
+        });
+    }
+    for (var i of todosToDraw){
+        i.draw();
     }
     $('#category_span').html(projectName[0].toUpperCase() + projectName.slice(1));
     doSearch();
@@ -217,7 +279,7 @@ function loadData() {
                 $(`#projects`).prepend(`<li class="cursor menu-el project" id="${i.split(' ').join('')}ProjectBtn"><div><img src="./svgs/AlertCircle.svg"><span class="menu-txt">${i}</span></div><img id="${i.split(' ').join('')}ProjectDelete" class="menu-delete" src="./svgs/Bin.svg"></li>`);
             }
             $(`#${i.split(' ').join('')}ProjectBtn`).on('click', () => {
-                openProject(i);
+                openProject(i, selected.val());
             });
             $(`#${i.split(' ').join('')}ProjectDelete`).hide();
             $(`#${i.split(' ').join('')}ProjectBtn`).hover(()=>{
@@ -242,7 +304,7 @@ function loadData() {
         }
         console.log(todos);
         ext.get('activeProject', (data) => {
-            openProject(data.activeProject);
+            openProject(data.activeProject, selected.val());
         });
     });
 
